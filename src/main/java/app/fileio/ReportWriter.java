@@ -48,7 +48,7 @@ public class ReportWriter {
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
             for (Customer customer : topCustomers) {
                 int totalAmount = getTotalAmountForCustomer(customer.getCustomerId());
-                writer.println(customer.getName() + "," + customer.getAddress() + "," + totalAmount);
+                writer.println(customer.getName() + ";" + customer.getAddress() + ";" + totalAmount);
             }
         } catch (IOException e) {
             logError("Error generating top customers report: " + e.getMessage());
