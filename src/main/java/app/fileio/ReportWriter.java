@@ -43,11 +43,11 @@ public class ReportWriter {
         }
     }
 
-    public void writeTopCustomersReport(String filePath, List<Customer> customers) {
-        List<Customer> topCustomers = getTopCustomers();
+    public void writeTopCustomersReport(String filePath, List<Customer> customers,List<Payment> payments) {
+        List<Customer> topCustomers = getTopCustomers(customers,payments);
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
             for (Customer customer : topCustomers) {
-                int totalAmount = getTotalAmountForCustomer(customer.getCustomerId());
+                int totalAmount = getTotalAmountForCustomer(customer.getCustomerId(),payments);
                 writer.println(customer.getName() + ";" + customer.getAddress() + ";" + totalAmount);
             }
         } catch (IOException e) {
@@ -55,16 +55,16 @@ public class ReportWriter {
         }
     }
 
-    private List<Customer> getTopCustomers() {
+    private List<Customer> getTopCustomers( List<Customer> customers,List<Payment> payments) {
         List<Customer> topCustomers = new ArrayList<>(customers);
-        topCustomers.sort(Comparator.comparingInt(c -> -getTotalAmountForCustomer(c.getCustomerId())));
+        topCustomers.sort(Comparator.comparingInt(c -> -getTotalAmountForCustomer(c.getCustomerId(),payments)));
         if (topCustomers.size() > 2) {
             topCustomers = topCustomers.subList(0, 2);
         }
         return topCustomers;
     }
 
-    private int getTotalAmountForCustomer(String customerId) {
+    private int getTotalAmountForCustomer(String customerId,List<Payment> payments) {
         int totalAmount = 0;
         for (Payment payment : payments) {
             if (payment.getCustomerId().equals(customerId)) {

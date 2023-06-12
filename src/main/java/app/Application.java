@@ -41,7 +41,7 @@ public class Application {
         ReportWriter reportWriter = new ReportWriter();
         reportWriter.writeReport01(REPORT_01_FILE, topCustomers);
         reportWriter.writeReport02(REPORT_02_FILE, payments);
-        reportWriter.writeTopCustomersReport(TOP_CUSTOMERS_FILE, topCustomers);
+        reportWriter.writeTopCustomersReport(TOP_CUSTOMERS_FILE, topCustomers,payments);
     }
 
     private void initializeData() {
