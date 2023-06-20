@@ -24,6 +24,8 @@ public class Application {
 
     private List<Customer> customers;
     private List<Payment> payments;
+    private Map<String,Integer> shopCardSales;
+    private Map<String,Integer> shopTransferSales;
 
     public static void main(String[] args) {
         Application application = new Application();
@@ -36,16 +38,22 @@ public class Application {
         customers = fileReader.readCustomersFromFile(CUSTOMER_FILE);
         payments = fileReader.readPaymentsFromFile(PAYMENT_FILE, customers);
 
+        shopCardSales = fileReader.getShopCardSales();
+        shopTransferSales = fileReader.getShopTransferSales();
+
         ReportGenerator reportGenerator = new ReportGenerator();
         List<Customer> topCustomers = reportGenerator.getTopCustomers(customers, payments);
         ReportWriter reportWriter = new ReportWriter();
-        reportWriter.writeReport01(REPORT_01_FILE, topCustomers);
-        reportWriter.writeReport02(REPORT_02_FILE, payments);
+        reportWriter.writeReport01(REPORT_01_FILE, topCustomers,payments);
+        reportWriter.writeReport02(REPORT_02_FILE, shopTransferSales,shopCardSales);
         reportWriter.writeTopCustomersReport(TOP_CUSTOMERS_FILE, topCustomers,payments);
+
     }
 
     private void initializeData() {
         customers = new ArrayList<>();
         payments = new ArrayList<>();
+        shopCardSales = new HashMap<>();
+        shopTransferSales = new HashMap<>();
     }
 }

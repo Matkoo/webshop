@@ -12,9 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 class ReportWriterTest {
@@ -36,11 +34,15 @@ class ReportWriterTest {
         customers.add(new Customer("webshop1", "customer1", "John Doe", "123 Main St"));
         customers.add(new Customer("webshop1", "customer2", "Jane Smith", "456 Elm St"));
 
-        reportWriter.writeReport01(REPORT01_FILE, customers);
+        List<Payment> payments = new ArrayList<>();
+        payments.add(new Payment("webshop1", "customer1", "card", 100, "123456", "111111", parseDate("2023-01-01")));
+        payments.add(new Payment("webshop1", "customer2", "card", 200, "654321", "222222", parseDate("2023-02-02")));
+
+        reportWriter.writeReport01(REPORT01_FILE, customers,payments);
 
         List<String> expectedLines = new ArrayList<>();
-        expectedLines.add("webshop1;customer1;John Doe;123 Main St");
-        expectedLines.add("webshop1;customer2;Jane Smith;456 Elm St");
+        expectedLines.add("Jane Smith;456 Elm St;200");
+        expectedLines.add("John Doe;123 Main St;100");
 
         assertFileContentEquals(REPORT01_FILE, expectedLines);
     }
@@ -48,14 +50,17 @@ class ReportWriterTest {
     @Test
     public void testWriteReport02() throws IOException {
         List<Payment> payments = new ArrayList<>();
+        Map<String,Integer> shopCardSales = new HashMap<>();
+        Map<String,Integer> shopTransferSales = new HashMap<>();
         payments.add(new Payment("webshop1", "customer1", "card", 100, "123456", "111111", parseDate("2023-01-01")));
         payments.add(new Payment("webshop1", "customer2", "card", 200, "654321", "222222", parseDate("2023-02-02")));
 
-        reportWriter.writeReport02(REPORT02_FILE, payments);
+        shopCardSales.put("webshop1",300);
+        shopTransferSales.put("webshop1",0);
+        reportWriter.writeReport02(REPORT02_FILE, shopTransferSales,shopCardSales);
 
         List<String> expectedLines = new ArrayList<>();
-        expectedLines.add("webshop1;customer1;card;100;123456;111111;2023-01-01");
-        expectedLines.add("webshop1;customer2;card;200;654321;222222;2023-02-02");
+        expectedLines.add("webshop1;300;0");
 
         assertFileContentEquals(REPORT02_FILE, expectedLines);
     }

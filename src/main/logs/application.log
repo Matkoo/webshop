@@ -1,0 +1,8 @@
+2023.06.19 15:28:21 - Customer not found for payment: WS02-A04
+2023.06.19 15:28:21 - Error writing report 01: src\main\reports\report01.csv (A rendszer nem találja a megadott elérési utat)
+2023.06.19 15:28:21 - Error writing report 02: src\main\reports\report02.csv (A rendszer nem találja a megadott elérési utat)
+2023.06.19 15:28:21 - Error generating top customers report: src\main\reports\top.csv (A rendszer nem találja a megadott elérési utat)
+2023.06.19 15:30:39 - Customer not found for payment: WS02-A04
+2023.06.19 16:39:12 - Customer not found for payment: WS02-A04
+2023.06.20 14:27:13 - Customer not found for payment: WS02-A04
+2023.06.20 14:28:17 - Customer not found for payment: WS02-A04

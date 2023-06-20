@@ -122,4 +122,12 @@ public class FileReader {
     private void logError(String errorMessage) {
         Logger.logError(errorMessage);
     }
+
+    public Map<String, Integer> getShopCardSales() {
+        return shopCardSales;
+    }
+
+    public Map<String, Integer> getShopTransferSales() {
+        return shopTransferSales;
+    }
 }
